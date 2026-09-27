@@ -1,0 +1,33 @@
+
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    char name[100];
+    int i, lastSpace = -1;
+
+    printf("Enter your full name: ");
+    fgets(name, sizeof(name), stdin);
+
+    // Remove newline
+    name[strcspn(name, "\n")] = '\0';
+
+    // Find the last space (before surname)
+    for (i = 0; name[i] != '\0'; i++) {
+        if (name[i] == ' ')
+            lastSpace = i;
+    }
+
+    printf("Formatted name: ");
+
+    // Print initials of first/middle names
+    for (i = 0; i < lastSpace; i++) {
+        if (i == 0 || (name[i - 1] == ' ' && name[i] != ' '))
+            printf("%c.", name[i]);
+    }
+
+    // Print surname in full
+    printf(" %s", &name[lastSpace + 1]);
+
+    return 0;
+}
